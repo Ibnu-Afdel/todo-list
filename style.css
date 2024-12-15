@@ -131,7 +131,6 @@ footer {
     background-color: #d63031;
 }
 
-/* Edit button */
 .edit-button {
     background-color: #74b9ff;
     color: white;
@@ -149,7 +148,6 @@ footer {
 }
 
 
-/* Project container */
 #project-container {
     margin-bottom: 20px;
 }
@@ -251,3 +249,42 @@ footer {
 #search-container {
     margin-top: 20px;
 }
+
+
+#sort-todos {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 100%; 
+    box-sizing: border-box;
+}
+
+label[for="sort-todos"] {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+#sort-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+#sort-todos:hover {
+    border-color: #888;
+    cursor: pointer;
+}
+
+#sort-todos:focus {
+    outline: none;
+    border-color: #4d90fe;
+    box-shadow: 0 0 5px rgba(77, 144, 254, 0.5);
+}
+

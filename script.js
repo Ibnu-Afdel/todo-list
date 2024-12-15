@@ -288,7 +288,6 @@ function searchTodos(query) {
         priorityElement.textContent = `Priority: ${todo.priority}`;
         todoItem.appendChild(priorityElement);
 
-        // Priority color styling
         if (todo.priority === "High") {
             todoItem.classList.add("high-priority");
         } else if (todo.priority === "Medium") {
@@ -297,7 +296,6 @@ function searchTodos(query) {
             todoItem.classList.add("low-priority");
         }
 
-        // Add delete and edit buttons
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
         deleteButton.classList.add("delete-button");
@@ -315,6 +313,26 @@ function searchTodos(query) {
 }
 
 initializeSearch();
+
+// Function to sort todos by priority or due date
+function sortTodos() {
+    const sortMethod = document.getElementById("sort-todos").value;
+    const currentProject = projects[currentProjectIndex];
+
+    if (sortMethod === "priority") {
+        currentProject.todos.sort((a, b) => {
+            const priorityOrder = { High: 1, Medium: 2, Low: 3 };
+            return priorityOrder[a.priority] - priorityOrder[b.priority];
+        });
+    } else if (sortMethod === "dueDate") {
+        currentProject.todos.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+    }
+
+    displayTodo();
+}
+
+// Attach the sort function to the dropdown
+document.getElementById("sort-todos").addEventListener("change", sortTodos);
 
 
 
