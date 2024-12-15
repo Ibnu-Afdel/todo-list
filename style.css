@@ -109,10 +109,43 @@ form button:hover {
     color: green;
 }
 
-/* Footer */
 footer {
     background: #6c5ce7;
     color: white;
     text-align: center;
     padding: 10px 0;
 }
+
+.delete-button {
+    background-color: #ff7675;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.delete-button:hover {
+    background-color: #d63031;
+}
+
+/* Edit button */
+.edit-button {
+    background-color: #74b9ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.edit-button:hover {
+    background-color: #0984e3;
+}
+
+
