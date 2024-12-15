@@ -34,11 +34,36 @@ function displayTodo(todo){
     priorityElement.textContent = `Priority: ${todo.priority}`;
     todoItem.appendChild(priorityElement);
 
+     if (todo.priority === "High") {
+            todoItem.classList.add("high-priority");
+        } else if (todo.priority === "Medium") {
+            todoItem.classList.add("medium-priority");
+        } else if (todo.priority === "Low") {
+            todoItem.classList.add("low-priority");
+        }
+
     todoList.appendChild(todoItem);
     });
 }
 
-// Example of how we use this class:
+function addTodo(event){
+    event.preventDefault();
+
+    const title = document.getElementById('title').value;
+    const description = document.getElementById('description').value;
+    const dueDate = document.getElementById('dueDate').value;
+    const priority = document.getElementById('priority').value;
+
+    const newTodo = new Todo(title, description, dueDate, priority);
+    todoListArry.push(newTodo);
+
+    document.getElementById("todo-form").reset();
+
+    displayTodo();
+}
+
+document.getElementById("todo-form").addEventListener("submit", addTodo);
+
 todoListArry.push(
     new Todo(
         "Learn JavaScript",
