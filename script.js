@@ -33,19 +33,16 @@ function displayProjects() {
     });
 }
 
-// Select a project
 function selectProject(index) {
     currentProjectIndex = index;
     displayTodo();
     displayProjects();
 }
 
-// Save to localStorage
 function saveToLocalStorage() {
     localStorage.setItem("todoAppData", JSON.stringify(projects));
 }
 
-// Load from localStorage
 function loadFromLocalStorage() {
     const data = JSON.parse(localStorage.getItem("todoAppData"));
 
@@ -66,7 +63,6 @@ function loadFromLocalStorage() {
 }
 
 
-// Display the todos for the current project
 function displayTodo() {
     const todoList = document.getElementById("todo-list");
     todoList.textContent = "";
@@ -116,7 +112,6 @@ function displayTodo() {
     });
 }
 
-// Open the edit form
 function openEditForm(index) {
     const currentProject = projects[currentProjectIndex];
     const todo = currentProject.todos[index];
@@ -130,7 +125,6 @@ function openEditForm(index) {
     form.dataset.editing = index;
 }
 
-// Delete a todo
 function deleteTodo(index) {
     const currentProject = projects[currentProjectIndex];
     currentProject.todos.splice(index, 1);
@@ -138,7 +132,6 @@ function deleteTodo(index) {
     saveToLocalStorage();
 }
 
-// Add or edit a todo
 function addTodo(event) {
     event.preventDefault();
 
@@ -168,7 +161,6 @@ function addTodo(event) {
     saveToLocalStorage();
 }
 
-// Add a new project
 function addProject() {
     const projectName = prompt("Enter the name of the new project:");
     if (projectName) {
@@ -181,7 +173,6 @@ function addProject() {
     }
 }
 
-// Initialize the app
 function initializeApp() {
     loadFromLocalStorage();
     displayProjects();
