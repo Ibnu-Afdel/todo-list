@@ -8,13 +8,47 @@ class Todo {
 }
 
 const  todoListArry = [] ;
+const projects = [
+    {
+        name: 'Default',
+        todos: [],
+    }
+];
+let currentProjectIndex = 0;
+
+function displayProjects(){
+    const projectList = document.getElementById('project-list');
+    projectList.textContent = '';
+
+    projects.forEach((project,index) => {
+        const projectItem = document.createElement('li');
+        projectItem.textContent = project.name;
+        projectItem.classList.add('project-item');
+
+        if (index === currentProjectIndex){
+            projectItem.classList.add('active-project');
+        }
+
+        projectItem.addEventListener('click', ()=> selectProject(index));
+        projectList.appendChild(projectItem)
+    });
+}
+
+function selectProject(index){
+    currentProjectIndex = index;
+    displayTodo();
+    displayProjects();
+}
+
 
 function displayTodo(){
     const todoList = document.getElementById('todo-list')
 
     todoList.textContent = '';
 
-    todoListArry.forEach((todo, index) => {
+    const currentProject = projects[currentProjectIndex];
+    currentProject.todos.forEach((todo, index) => {
+
     const todoItem = document.createElement('li');
     todoItem.classList.add('todo-item');
 
@@ -59,7 +93,9 @@ function displayTodo(){
 }
 
 function openEditForm(index){
-    const todo = todoListArry[index];
+    // const todo = todoListArry[index];
+    const currentProject = projects[currentProjectIndex];
+    const todo = currentProject.todos[index];
 
     document.getElementById('title').value = todo.title;
     document.getElementById('description').value = todo.description;
@@ -70,12 +106,13 @@ function openEditForm(index){
     form.dataset.editing = index;
 }
 
-function deleteTodo(index){
-    todoListArry.splice(index,1);
+function deleteTodo(index) {
+    const currentProject = projects[currentProjectIndex];
+    currentProject.todos.splice(index, 1);
     displayTodo();
 }
 
-function addTodo(event){
+function addTodo(){
     event.preventDefault();
 
     const title = document.getElementById('title').value;
@@ -84,9 +121,11 @@ function addTodo(event){
     const priority = document.getElementById('priority').value;
 
     const editingIndex = document.getElementById('todo-form').dataset.editing;
+    const currentProject = projects[currentProjectIndex];
 
     if (editingIndex !== undefined && editingIndex !== ''){
-        const todo = todoListArry[editingIndex];
+        // const todo = todoListArry[editingIndex];
+        const todo = currentProject.todos[editingIndex];
         todo.title = title;
         todo.description = description;
         todo.dueDate = dueDate;
@@ -96,7 +135,8 @@ function addTodo(event){
         document.getElementById('todo-form').dataset.editing = '';
     } else {
         const newTodo = new Todo(title, description, dueDate, priority);
-        todoListArry.push(newTodo);
+        // todoListArry.push(newTodo);
+        currentProject.todos.push(newTodo);
     }
     
 
@@ -104,34 +144,19 @@ function addTodo(event){
 
     displayTodo();
 }
+document.getElementById('add-project').addEventListener('click', addProject);
+
+function addProject(){
+    const projectName = prompt('Enter the name of the new project: ');
+    if (projectName){
+        projects.push({
+            name: projectName,
+            todos: []
+        });
+        displayProjects();
+    }
+}
 
 document.getElementById("todo-form").addEventListener("submit", addTodo);
-
-todoListArry.push(
-    new Todo(
-        "Learn JavaScript",
-        "Complete the JavaScript section of my course",
-        "2024-12-20",
-        "High"
-    )
-)
-
-todoListArry.push(
-    new Todo(
-        "Learn JavaScript 2",
-        "Complete the JavaScript section of my course",
-        "2024-12-20",
-        "medium"
-    )
-)
-
-todoListArry.push(
-    new Todo(
-        "Learn JavaScript 3",
-        "Complete the JavaScript section of my course",
-        "2024-12-20",
-        "low"
-    )
-)
 
 displayTodo();
