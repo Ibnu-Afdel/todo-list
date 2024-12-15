@@ -161,9 +161,14 @@ function openExpandedView(index) {
       closeButton.id = "close-expanded";
       closeButton.addEventListener("click", () => {
           expandedView.classList.add("hidden");
+          localStorage.removeItem('expandedTodoIndex');
       });
       expandedView.appendChild(closeButton);
 
+      localStorage.setItem('expandedTodoIndex', JSON.stringify({
+        project: currentProjectIndex,
+        todo:index
+      }));
   }
 
 function openEditForm(index) {
@@ -231,7 +236,18 @@ function initializeApp() {
     loadFromLocalStorage();
     displayProjects();
     displayTodo();
+
+    const expandedTodoData = JSON.parse(localStorage.getItem("expandedTodoIndex"));
+    if (expandedTodoData) {
+        const { project, todo } = expandedTodoData;
+        if (projects[project] && projects[project].todos[todo]) {
+            currentProjectIndex = project;
+            displayProjects();
+            openExpandedView(todo);
+        }
+    }
 }
+
 
 initializeApp();
 
