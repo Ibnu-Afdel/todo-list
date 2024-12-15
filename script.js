@@ -74,6 +74,8 @@ function displayTodo() {
 
         const titleElement = document.createElement("h3");
         titleElement.textContent = todo.title;
+        titleElement.classList.add('clickable');
+        titleElement.addEventListener('click', () => openExpandedView(index));
         todoItem.appendChild(titleElement);
 
         const descriptionElement = document.createElement("p");
@@ -111,6 +113,58 @@ function displayTodo() {
         todoList.appendChild(todoItem);
     });
 }
+
+function openExpandedView(index) {
+    const currentProject = projects[currentProjectIndex];
+    const todo = currentProject.todos[index];
+  
+    const expandedView = document.getElementById("expanded-view");
+    expandedView.classList.remove("hidden");
+    expandedView.textContent = ""; 
+  
+    const titleElement = document.createElement("h2");
+    titleElement.textContent = todo.title;
+    expandedView.appendChild(titleElement);
+  
+    const descriptionElement = document.createElement("p");
+    const descriptionLabel = document.createElement("strong");
+    descriptionLabel.textContent = "Description: ";
+    descriptionElement.appendChild(descriptionLabel);
+    descriptionElement.appendChild(document.createTextNode(todo.description));
+    expandedView.appendChild(descriptionElement);
+  
+    const dueDateElement = document.createElement("p");
+    const dueDateLabel = document.createElement("strong");
+    dueDateLabel.textContent = "Due Date: ";
+    dueDateElement.appendChild(dueDateLabel);
+    dueDateElement.appendChild(document.createTextNode(todo.dueDate));
+    expandedView.appendChild(dueDateElement);
+  
+    const priorityElement = document.createElement("p");
+    const priorityLabel = document.createElement("strong");
+    priorityLabel.textContent = "Priority: ";
+    priorityElement.appendChild(priorityLabel);
+    priorityElement.appendChild(document.createTextNode(todo.priority));
+    expandedView.appendChild(priorityElement);
+  
+      const editButton = document.createElement("button");
+      editButton.textContent = "Edit";
+      editButton.id = "edit-todo";
+      editButton.addEventListener("click", () => {
+          openEditForm(index);
+          expandedView.classList.add("hidden");
+      });
+      expandedView.appendChild(editButton);
+  
+      const closeButton = document.createElement("button");
+      closeButton.textContent = "Close";
+      closeButton.id = "close-expanded";
+      closeButton.addEventListener("click", () => {
+          expandedView.classList.add("hidden");
+      });
+      expandedView.appendChild(closeButton);
+
+  }
 
 function openEditForm(index) {
     const currentProject = projects[currentProjectIndex];
