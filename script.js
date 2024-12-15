@@ -248,6 +248,75 @@ function initializeApp() {
     }
 }
 
+function initializeSearch() {
+    const searchBar = document.getElementById("search-bar");
+    searchBar.addEventListener("input", () => {
+        const query = searchBar.value.toLowerCase().trim();
+        searchTodos(query);
+    });
+}
+
+function searchTodos(query) {
+    const todoList = document.getElementById("todo-list");
+    todoList.textContent = "";
+
+    const currentProject = projects[currentProjectIndex];
+    const filteredTodos = currentProject.todos.filter(todo =>
+        todo.title.toLowerCase().includes(query) ||
+        todo.description.toLowerCase().includes(query) ||
+        todo.dueDate.toLowerCase().includes(query) ||
+        todo.priority.toLowerCase().includes(query)
+    );
+
+    filteredTodos.forEach((todo, index) => {
+        const todoItem = document.createElement("li");
+        todoItem.classList.add("todo-item");
+
+        const titleElement = document.createElement("h3");
+        titleElement.textContent = todo.title;
+        todoItem.appendChild(titleElement);
+
+        const descriptionElement = document.createElement("p");
+        descriptionElement.textContent = `Description: ${todo.description}`;
+        todoItem.appendChild(descriptionElement);
+
+        const dueDateElement = document.createElement("p");
+        dueDateElement.textContent = `Due Date: ${todo.dueDate}`;
+        todoItem.appendChild(dueDateElement);
+
+        const priorityElement = document.createElement("p");
+        priorityElement.textContent = `Priority: ${todo.priority}`;
+        todoItem.appendChild(priorityElement);
+
+        // Priority color styling
+        if (todo.priority === "High") {
+            todoItem.classList.add("high-priority");
+        } else if (todo.priority === "Medium") {
+            todoItem.classList.add("medium-priority");
+        } else if (todo.priority === "Low") {
+            todoItem.classList.add("low-priority");
+        }
+
+        // Add delete and edit buttons
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.classList.add("delete-button");
+        deleteButton.addEventListener("click", () => deleteTodo(index));
+        todoItem.appendChild(deleteButton);
+
+        const editButton = document.createElement("button");
+        editButton.textContent = "Edit";
+        editButton.classList.add("edit-button");
+        editButton.addEventListener("click", () => openEditForm(index));
+        todoItem.appendChild(editButton);
+
+        todoList.appendChild(todoItem);
+    });
+}
+
+initializeSearch();
+
+
 
 initializeApp();
 
