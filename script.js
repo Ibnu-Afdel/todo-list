@@ -1,17 +1,20 @@
-// Define the Todo class
 class Todo {
     constructor(title, description, dueDate, priority) {
-        this.title = title; // The title of the task
-        this.description = description; // A brief explanation
-        this.dueDate = dueDate; // The deadline for the task
-        this.priority = priority; // The priority level (e.g., 'high', 'medium', 'low')
+        this.title = title; 
+        this.description = description; 
+        this.dueDate = dueDate; 
+        this.priority = priority; 
     }
 }
 
+const  todoListArry = [] ;
 
 function displayTodo(todo){
     const todoList = document.getElementById('todo-list')
 
+    todoList.textContent = '';
+
+    todoListArry.forEach(todo => {
     const todoItem = document.createElement('li');
     todoItem.classList.add('todo-item');
 
@@ -32,14 +35,35 @@ function displayTodo(todo){
     todoItem.appendChild(priorityElement);
 
     todoList.appendChild(todoItem);
+    });
 }
 
 // Example of how we use this class:
-const myFirstTodo = new Todo(
-    "Learn JavaScript",
-    "Complete the JavaScript section of my course",
-    "2024-12-20",
-    "High"
-);
+todoListArry.push(
+    new Todo(
+        "Learn JavaScript",
+        "Complete the JavaScript section of my course",
+        "2024-12-20",
+        "High"
+    )
+)
 
-displayTodo(myFirstTodo);
+todoListArry.push(
+    new Todo(
+        "Learn JavaScript 2",
+        "Complete the JavaScript section of my course",
+        "2024-12-20",
+        "medium"
+    )
+)
+
+todoListArry.push(
+    new Todo(
+        "Learn JavaScript 2",
+        "Complete the JavaScript section of my course",
+        "2024-12-20",
+        "low"
+    )
+)
+
+displayTodo();
